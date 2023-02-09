@@ -1,5 +1,5 @@
 <div class="widget-header">
-  <ng-container [ngTemplateOutlet]="defaultWidgetHeader"></ng-container>
+  <ng-container [ngTemplateOutlet]="headerTemplate || defaultWidgetHeader"></ng-container>
 </div>
 <div class="widget-content">
   <div class="sky-condition">

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, TemplateRef } from '@angular/core';
 import { WidgetActions } from '../widget-actions';
 import { WidgetState } from '../widget-state';
 
@@ -10,4 +10,6 @@ import { WidgetState } from '../widget-state';
 export class WeatherWidgetComponent {
   state = inject(WidgetState);
   actions = inject(WidgetActions);
+
+  @Input() headerTemplate!: TemplateRef<any>;
 }
