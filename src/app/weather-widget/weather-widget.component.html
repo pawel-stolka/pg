@@ -1,11 +1,14 @@
 <div class="widget-header">
-  <ng-container [ngTemplateOutlet]="headerTemplate || defaultWidgetHeader"></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="headerTemplate || defaultWidgetHeader"
+    [ngTemplateOutletContext]="{ state: state }"
+  ></ng-container>
 </div>
 <div class="widget-content">
   <div class="sky-condition">
     {{ state.data.skyCondition === "sunny" ? "*" : "-" }}
   </div>
-  <div class="temperature"></div>
+  <div class="temperature">{{ state.data.temperature }}°C</div>
 </div>
 <div class="widget-actions">
   <button (click)="actions.reload()">Reload</button>

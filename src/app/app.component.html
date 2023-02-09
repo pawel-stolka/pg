@@ -5,6 +5,6 @@
 <weather-widget></weather-widget>
 <weather-widget [headerTemplate]="altWidgetHeader"></weather-widget>
 
-<ng-template #altWidgetHeader>
+<ng-template #altWidgetHeader let-state="state">
   <div class="alt-header">Today's weather</div>
 </ng-template>
