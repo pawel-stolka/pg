@@ -3,8 +3,19 @@
 </h3>
 
 <weather-widget></weather-widget>
-<weather-widget [headerTemplate]="altWidgetHeader"></weather-widget>
+<weather-widget
+  [headerTemplate]="altWidgetHeader"
+  [contentTemplate]="altWidgetContent"
+></weather-widget>
 
-<ng-template #altWidgetHeader let-state="state">
+<ng-template #altWidgetHeader>
   <div class="alt-header">Today's weather</div>
+</ng-template>
+
+<ng-template #altWidgetContent let-state>
+  <div>
+    <span>&#9728; {{ state.data.temperature }} °C</span> |
+    <span>{{ state.data.skyCondition === "sunny" ? "*" : "-" }}</span> |
+    <span>&#9732; {{ state.data.windSpeed }} m/s </span>
+  </div>
 </ng-template>

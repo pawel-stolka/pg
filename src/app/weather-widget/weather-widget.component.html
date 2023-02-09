@@ -1,21 +1,27 @@
 <div class="widget-header">
   <ng-container
     [ngTemplateOutlet]="headerTemplate || defaultWidgetHeader"
-    [ngTemplateOutletContext]="{ state: state }"
+    [ngTemplateOutletContext]="{ $implicit: state }"
   ></ng-container>
+  <ng-template #defaultWidgetHeader>
+    <div class="widget-title">Weather Forecast</div>
+    <div class="widget-subtitle">Current weather in your location</div>
+  </ng-template>
 </div>
 <div class="widget-content">
-  <div class="sky-condition">
-    {{ state.data.skyCondition === "sunny" ? "*" : "-" }}
-  </div>
-  <div class="temperature">{{ state.data.temperature }}°C</div>
+  <ng-container
+    [ngTemplateOutlet]="contentTemplate || defaultWidgetContent"
+    [ngTemplateOutletContext]="{ $implicit: state }"
+  >
+  </ng-container>
+  <ng-template #defaultWidgetContent>
+    <div class="sky-condition">
+      {{ state.data.skyCondition === "sunny" ? "*" : "-" }}
+    </div>
+    <div class="temperature">{{ state.data.temperature }}°C</div>
+  </ng-template>
 </div>
 <div class="widget-actions">
   <button (click)="actions.reload()">Reload</button>
   <button (click)="actions.copyData()">Copy Info</button>
 </div>
-
-<ng-template #defaultWidgetHeader>
-  <div class="widget-title">Weather Forecast</div>
-  <div class="widget-subtitle">Current weather in your location</div>
-</ng-template>

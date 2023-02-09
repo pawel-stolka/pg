@@ -12,4 +12,5 @@ export class WeatherWidgetComponent {
   actions = inject(WidgetActions);
 
   @Input() headerTemplate!: TemplateRef<any>;
+  @Input() contentTemplate!: TemplateRef<WidgetState>;
 }
