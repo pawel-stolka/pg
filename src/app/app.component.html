@@ -6,6 +6,7 @@
 <weather-widget
   [headerTemplate]="altWidgetHeader"
   [contentTemplate]="altWidgetContent"
+  [actionsTemplate]="altActions"
 ></weather-widget>
 
 <ng-template #altWidgetHeader>
@@ -19,3 +20,9 @@
     <span>&#9732; {{ state.data.windSpeed }} m/s </span>
   </div>
 </ng-template>
+
+<ng-template #altActions>
+  <weather-custom-actions></weather-custom-actions>
+</ng-template>
+
+

@@ -1,7 +1,6 @@
 <div class="widget-header">
   <ng-container
     [ngTemplateOutlet]="headerTemplate || defaultWidgetHeader"
-    [ngTemplateOutletContext]="{ $implicit: state }"
   ></ng-container>
   <ng-template #defaultWidgetHeader>
     <div class="widget-title">Weather Forecast</div>
@@ -22,6 +21,12 @@
   </ng-template>
 </div>
 <div class="widget-actions">
-  <button (click)="actions.reload()">Reload</button>
-  <button (click)="actions.copyData()">Copy Info</button>
+  <ng-container
+    [ngTemplateOutlet]="actionsTemplate || defaultWidgetActions"
+    [ngTemplateOutletInjector]="injector"
+  ></ng-container>
+  <ng-template #defaultWidgetActions>
+    <button (click)="actions.reload()">Reload</button>
+    <button (click)="actions.copyData()">Copy Info</button>
+  </ng-template>
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, Input, TemplateRef } from '@angular/core';
+import { Component, inject, Injector, Input, TemplateRef } from '@angular/core';
 import { WidgetActions } from '../widget-actions';
 import { WidgetState } from '../widget-state';
 
@@ -8,9 +8,11 @@ import { WidgetState } from '../widget-state';
   styleUrls: ['./weather-widget.component.scss'],
 })
 export class WeatherWidgetComponent {
-  state = inject(WidgetState);
-  actions = inject(WidgetActions);
-
   @Input() headerTemplate!: TemplateRef<any>;
   @Input() contentTemplate!: TemplateRef<WidgetState>;
+  @Input() actionsTemplate!: TemplateRef<WidgetActions>;
+
+  state = inject(WidgetState);
+  actions = inject(WidgetActions);
+  injector = inject(Injector);
 }
