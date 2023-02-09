@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+}
+
+.widget-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid gray;
+
+  .widget-title {
+    font-size: 21px;
+    font-weight: 700;
+  }
+
+  .widget-subtitle {
+    font-size: 14px;
+  }
+}
+
+.widget-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.widget-actions {
+  height: 50px;
+  border-top: 1px solid gray;
+  background-color: rgb(235, 234, 234);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
