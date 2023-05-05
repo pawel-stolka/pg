@@ -1,0 +1,186 @@
+{
+  "plu": "1225315",
+  "advertBannerPatch": null,
+  "categoryTypes": [
+    {
+      "category": "FULL_PROTECTION",
+      "categoryName": "Wariant Pełny",
+      "insuranceBenefits": [
+        {
+          "description": "Naprawimy awarie po gwarancji producenta nawet do 5 lat od zakupu",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Wymienimy sprzęt na nowy, jeżeli naprawa będzie niemożliwa lub nieopłacalna",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Sprzęt o wartości do 300 zł wymienimy na nowy bez próby naprawy",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Naprawimy nieumyślne uszkodzenia (każde, które nie zostało dokonane celowo)",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Kurier zabierze sprzęt do serwisu i odwiezie po naprawie",
+          "choice": "CHECKED"
+        }
+      ],
+      "insuranceDurations": [
+        {
+          "duration": 5,
+          "insuranceId": "4641713387"
+        },
+        {
+          "duration": 3,
+          "insuranceId": "4641713412"
+        }
+      ]
+    },
+    {
+      "category": "BASIC_PROTECTION",
+      "categoryName": "Wariant Podstawowy",
+      "insuranceBenefits": [
+        {
+          "description": "Naprawimy awarie po gwarancji producenta nawet do 5 lat od zakupu",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Wymienimy sprzęt na nowy, jeżeli naprawa będzie niemożliwa lub nieopłacalna",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Sprzęt o wartości do 300 zł wymienimy na nowy bez próby naprawy",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Naprawimy nieumyślne uszkodzenia (każde, które nie zostało dokonane celowo)",
+          "choice": "UNCHECKED"
+        },
+        {
+          "description": "Kurier zabierze sprzęt do serwisu i odwiezie po naprawie",
+          "choice": "UNCHECKED"
+        }
+      ],
+      "insuranceDurations": [
+        {
+          "duration": 5,
+          "insuranceId": "165012984"
+        },
+        {
+          "duration": 3,
+          "insuranceId": "164258038"
+        }
+      ]
+    },
+    {
+      "category": "FULL_PROTECTION",
+      "categoryName": "Wariant Pełny",
+      "insuranceBenefits": [
+        {
+          "description": "Naprawimy awarie po gwarancji producenta nawet do 5 lat od zakupu",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Wymienimy sprzęt na nowy, jeżeli naprawa będzie niemożliwa lub nieopłacalna",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Sprzęt o wartości do 300 zł wymienimy na nowy bez próby naprawy",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Naprawimy nieumyślne uszkodzenia (każde, które nie zostało dokonane celowo)",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Kurier zabierze sprzęt do serwisu i odwiezie po naprawie",
+          "choice": "CHECKED"
+        }
+      ],
+      "insuranceDurations": [
+        {
+          "duration": 5,
+          "insuranceId": "4641713387"
+        },
+        {
+          "duration": 3,
+          "insuranceId": "4641713412"
+        }
+      ]
+    },
+    {
+      "category": "BASIC_PROTECTION",
+      "categoryName": "Wariant Podstawowy",
+      "insuranceBenefits": [
+        {
+          "description": "Naprawimy awarie po gwarancji producenta nawet do 5 lat od zakupu",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Wymienimy sprzęt na nowy, jeżeli naprawa będzie niemożliwa lub nieopłacalna",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Sprzęt o wartości do 300 zł wymienimy na nowy bez próby naprawy",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Naprawimy nieumyślne uszkodzenia (każde, które nie zostało dokonane celowo)",
+          "choice": "UNCHECKED"
+        },
+        {
+          "description": "Kurier zabierze sprzęt do serwisu i odwiezie po naprawie",
+          "choice": "UNCHECKED"
+        }
+      ],
+      "insuranceDurations": [
+        {
+          "duration": 5,
+          "insuranceId": "165012984"
+        },
+        {
+          "duration": 3,
+          "insuranceId": "164258038"
+        }
+      ]
+    },
+    {
+      "category": "FULL_PROTECTION",
+      "categoryName": "Wariant Pełny",
+      "insuranceBenefits": [
+        {
+          "description": "Naprawimy awarie po gwarancji producenta nawet do 7 lat od zakupu",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Wymienimy sprzęt na nowy, jeżeli naprawa będzie niemożliwa lub nieopłacalna",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Sprzęt o wartości do 300 zł wymienimy na nowy bez próby naprawy",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Naprawimy nieumyślne uszkodzenia (każde, które nie zostało dokonane celowo)",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Kurier zabierze sprzęt do serwisu i odwiezie po naprawie",
+          "choice": "CHECKED"
+        },
+        {
+          "description": "Chronisz swój sprzęt, jak długo chcesz. Możliwość rezygnacji w dowolnym momencie",
+          "choice": "CHECKED"
+        }
+      ],
+      "insuranceDurations": [
+        {
+          "duration": 7,
+          "insuranceId": "73215525561"
+        }
+      ]
+    }
+  ]
+}

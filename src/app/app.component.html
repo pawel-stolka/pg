@@ -2,7 +2,9 @@
   {{ title }}
 </h3>
 
-<weather-widget></weather-widget>
+<router-outlet></router-outlet>
+
+<!-- <weather-widget></weather-widget>
 <weather-widget
   [headerTemplate]="altWidgetHeader"
   [contentTemplate]="altWidgetContent"
@@ -18,4 +20,4 @@
     <span>{{ state.data.skyCondition === "sunny" ? "*" : "-" }}</span> |
     <span>&#9732; {{ state.data.windSpeed }} m/s </span>
   </div>
-</ng-template>
+</ng-template> -->

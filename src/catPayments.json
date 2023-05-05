@@ -1,0 +1,29 @@
+{
+  "categoryName": "Wariant Pełny",
+  "durations": ["5", "3"],
+  "paymentTypes": [
+    {
+      "insurance": {
+        "duration": "5",
+        "instalment": null,
+        "insuranceId": "4641713387",
+        "price": 98
+      },
+      "type": "TEN_TIMES"
+    },
+    {
+      "insurance": {
+        "duration": "5",
+        "instalment": {
+          "instalmentAmount": 20,
+          "instalmentCode": "1_rata",
+          "instalmentPrice": 49,
+          "loanInterest": 0
+        },
+        "insuranceId": "4641713387",
+        "price": 980
+      },
+      "type": "ONE_TIME"
+    }
+  ]
+}
