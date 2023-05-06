@@ -1,7 +1,7 @@
 <h3>products</h3>
 
 <div class="container">
-  <ng-container *ngIf="getProducts$() | async as products">
+  <ng-container *ngIf="products$ | async as products">
     <!-- <pre>{{ products | json }}</pre> -->
 
     <mat-card *ngFor="let product of products">

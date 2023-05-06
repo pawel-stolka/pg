@@ -7,7 +7,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-
+  products$ = this.productService.products$;
+  
   constructor(private readonly productService: ProductService) {}
 
   getProducts$() {

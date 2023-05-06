@@ -15,6 +15,7 @@ import { WeatherWidgetComponent } from './features/weather-widget/weather-widget
 import { CategoriesComponent } from './features/products/categories/categories.component';
 import { BenefitsComponent } from './features/products/benefits/benefits.component';
 import { CategoryDetailComponent } from './features/products/categories/category-detail/category-detail.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -40,6 +41,7 @@ export const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [WidgetState, WidgetActions],
   bootstrap: [AppComponent],

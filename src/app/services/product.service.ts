@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of, shareReplay, tap } from 'rxjs';
 
 export enum InsuranceType {
   ONE_TIME = 'ONE_TIME',
@@ -18,6 +18,7 @@ export interface Category {
   id: number;
   categoryName: string;
   insuranceDetails: InsuranceDetail[];
+  durations?: string[];
 }
 
 export interface Product {
@@ -30,10 +31,30 @@ export interface Product {
   providedIn: 'root',
 })
 export class ProductService {
-  constructor() {}
+  products$: Observable<Product[]>;
+
+  constructor() {
+    this.products$ = this.getProducts$();
+  }
+
+  init() {}
 
   getProducts$(): Observable<Product[]> {
-    return of(mockProducts)
+    return of(mockProducts).pipe(
+      tap((products) => console.log('products', products)),
+      map((products) => {
+        let res = products.map((p) => ({
+          ...p,
+          categories: p.categories.map((c) => ({
+            ...c,
+            durations: c.insuranceDetails.map((det) => det.duration),
+          })),
+        }));
+
+        console.log('res', res);
+        return res;
+      })
+    );
   }
 }
 
@@ -121,7 +142,7 @@ const _categories2: Category[] = [
 
 const _mockCategories: Category[][] = [_categories1, _categories2];
 const mockCategories = (id: number) => {
-  return _mockCategories[id]
+  return _mockCategories[id];
 };
 
 const mockProducts: Product[] = [
