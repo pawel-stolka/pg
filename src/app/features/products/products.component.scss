@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.mat-card {
+  margin: 10px;
+
+  .mat-card-title {
+    border: 2px dotted dodgerblue;
+    border-radius: 5px;
+    padding: 5px;
+  }
+}

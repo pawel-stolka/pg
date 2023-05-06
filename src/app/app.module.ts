@@ -3,15 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { WeatherWidgetComponent } from './weather-widget/weather-widget.component';
 import { WidgetActions } from './widget-actions';
 import { WidgetState } from './widget-state';
-import { HomeComponent } from './home/home.component';
-import { ProductsComponent } from './products/products.component';
-import { ProductDetailsComponent } from './details/details.component';
-import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './features/home/home.component';
+import { ProductDetailsComponent } from './features/details/details.component';
+import { NavComponent } from './features/nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { ProductsComponent } from './features/products/products.component';
+import { WeatherWidgetComponent } from './features/weather-widget/weather-widget.component';
+import { CategoriesComponent } from './features/products/categories/categories.component';
+import { BenefitsComponent } from './features/products/benefits/benefits.component';
+import { CategoryDetailComponent } from './features/products/categories/category-detail/category-detail.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -28,6 +31,9 @@ export const routes: Routes = [
     ProductsComponent,
     ProductDetailsComponent,
     NavComponent,
+    CategoriesComponent,
+    BenefitsComponent,
+    CategoryDetailComponent,
   ],
   imports: [
     BrowserModule,

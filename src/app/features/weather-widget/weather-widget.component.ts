@@ -1,6 +1,6 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import { WidgetActions } from '../widget-actions';
-import { WidgetState } from '../widget-state';
+import { WidgetActions } from 'src/app/widget-actions';
+import { WidgetState } from 'src/app/widget-state';
 
 @Component({
   selector: 'weather-widget',
