@@ -32,6 +32,23 @@
               {{ durations[id] }}
             </option>
           </select>
+          <hr>
+
+          <pre>{{ category.durations | json }}</pre>
+          <mat-form-field>
+            <mat-label>Durations</mat-label>
+            <mat-select [formControl]="durationForm" required>
+              <mat-option
+                *ngFor="let duration of category.durations; index as id"
+                [value]="durations[0]"
+              >
+                {{ duration }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="durationForm.hasError('required')"
+              >Please choose duration</mat-error
+            >
+          </mat-form-field>
         </ng-container>
 
         <!-- <mat-form-field>
@@ -64,14 +81,6 @@
         >
         <mat-hint>{{ animalControl.value?.sound }}</mat-hint>
       </mat-form-field> -->
-
-      <!-- <mat-radio-group class="select">
-        <mat-radio-button
-          *ngFor="let detail of category.insuranceDetails"
-          [value]="detail.duration"
-          >{{ detail.duration }}</mat-radio-button
-        >
-      </mat-radio-group> -->
     </div>
   </div>
   <!-- <mat-card *ngFor="let category of categories; index as id">

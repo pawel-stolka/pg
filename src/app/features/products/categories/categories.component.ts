@@ -25,6 +25,7 @@ export class CategoriesComponent {
   constructor() {
     this.durations$ = this.getDurations();
   }
+  
   ngOnInit(): void {
     this.animalsSub = this.getAnimals().subscribe(res => {
       // console.log('this.getAnimals | SUB', res);
