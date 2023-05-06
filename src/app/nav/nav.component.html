@@ -1,7 +1,9 @@
 <div class="container">
   <ng-content></ng-content>
+  <!-- <mat-spinner></mat-spinner> -->
+
 
   <div *ngFor="let route of routes">
-    <button routerLink="{{ route }}">{{ route }}</button>
+    <button mat-raised-button routerLink="{{ route }}">{{ route }}</button>
   </div>
 </div>
