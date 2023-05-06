@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Observable, delay, of } from 'rxjs';
 import { Category } from 'src/app/services/product.service';
 
@@ -14,8 +19,41 @@ export class CategoriesComponent {
 
   durations$: Observable<string[]>;
 
-  durationForm: FormControl = new FormControl();//'bla', Validators.required);
+  durationForm: FormControl = new FormControl(); //'bla', Validators.required);
 
+  patientCategory: FormGroup; // = new FormGroup(null);
+
+  patientCategories = [
+    {
+      id: 1,
+      name: 'name 1',
+      description: 'description 1',
+    },
+    {
+      id: 2,
+      name: 'name 2',
+      description: 'description 2',
+    },
+    {
+      id: 3,
+      name: 'name 3',
+      description: 'description 3',
+    },
+  ];
+
+  constructor(private fb: FormBuilder) {
+    this.durations$ = getDurations();
+    this.patientCategory = this.fb.group({
+      category: [null, Validators.required],
+    });
+    const toSelect = this.patientCategories.find((c) => c.id == 2);
+    this.patientCategory.get('category')?.setValue(toSelect);
+  }
+
+  ngOnInit() {
+  }
+
+  /*
   animalsSub: any = null;
   animals: string[] = [];
   animalCtrl: FormControl = new FormControl();
@@ -25,7 +63,7 @@ export class CategoriesComponent {
   constructor() {
     this.durations$ = this.getDurations();
   }
-  
+
   ngOnInit(): void {
     this.animalsSub = this.getAnimals().subscribe(res => {
       // console.log('this.getAnimals | SUB', res);
@@ -47,16 +85,15 @@ export class CategoriesComponent {
   };
 
   getDurations = (): Observable<string[]> => of(mockDurations).pipe(delay(1500));
-
+*/
 }
 
-const mockDurations: string[] = [
-  '3', '5', '8', '11'
-]
+const getDurations = (): Observable<string[]> =>
+  of(mockDurations).pipe(delay(1500));
 
-const mockAnimals: string[] = [
-  'Lion', 'Tiger', 'Dog', 'Cat'
-]
+const mockDurations: string[] = ['3', '5', '8', '11'];
+
+const mockAnimals: string[] = ['Lion', 'Tiger', 'Dog', 'Cat'];
 
 const mockAnimals0: Animal[] = [
   { name: 'Dog', sound: 'Woof!' },

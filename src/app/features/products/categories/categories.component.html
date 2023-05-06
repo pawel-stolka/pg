@@ -18,6 +18,23 @@
       <div class="divider"></div>
 
       <div class="select">
+        <form [formGroup]="patientCategory">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="_Category" formControlName="category">
+              <mat-option>--</mat-option>
+              <mat-option
+                *ngFor="let category of patientCategories"
+                [value]="category"
+              >
+                {{ category.name }} - {{ category.description }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <p>{{patientCategory.get('category')?.value | json}}</p>
+        </form>
+      </div>
+
+      <div class="select0">
         <div>{{ category.durations }}</div>
         <!-- <ng-container *ngIf="animals.length > 0">
           <select name="items" id="items" [formControl]="animalCtrl">
@@ -32,7 +49,7 @@
               {{ durations[id] }}
             </option>
           </select>
-          <hr>
+          <hr />
 
           <pre>{{ category.durations | json }}</pre>
           <mat-form-field>
