@@ -1,68 +1,81 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Observable, delay, of, tap } from 'rxjs';
-import { Category } from 'src/app/services/product.service';
+import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Colors } from '@common/Colors';
+import { Category, Product } from '@common/models';
+import { Observable, delay, map, of, tap } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent {
   @Input() categories: Category[] = [];
+  @Input() product: Product = {} as Product;
 
+  productsForm: FormGroup;
+  // products$: Observable<Product[]>;
+  categories$: Observable<any>;
   durations$: Observable<string[]>;
-
-  durationForm: FormControl = new FormControl(); //'bla', Validators.required);
-
   durationsForm: FormGroup;
-  durationsValues: string[] = []
 
-  patientCategory: FormGroup;
-  patientCategories = [
-    {
-      id: 1,
-      name: 'name 1',
-      description: 'description 1',
-    },
-    {
-      id: 2,
-      name: 'name 2',
-      description: 'description 2',
-    },
-    {
-      id: 3,
-      name: 'name 3',
-      description: 'description 3',
-    },
-  ];
+  _durations$: Observable<string[]>;
+  _durationsForm: FormGroup;
+  _durationsValues: string[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productService: ProductService) {
+    this.productsForm = this.fb.group({
+      products: [null, Validators.required],
+    });
+    this.categories$ = this.productService.products$.pipe(
+      tap((products) => {
+        console.log('%c[this.categories]', Colors.INFO, this.categories);
+        console.log('%c[product]', Colors.BIG_GREY, this.product);
+        console.log('%c[RAW products]', Colors.BIG_GREY, products);
+      }),
+      map((products) => {
+        let categories = products.find(
+          ({ plu }) => plu === this.product.plu
+        )?.categories;
+
+        return categories;
+      }),
+      tap((categories) => {
+        console.log(
+          '%c[CategoriesComponent] categories AFTER',
+          Colors.BIG_YELLOW,
+          categories
+        );
+      })
+    );
+    this.durations$ = this.categories$.pipe(
+      map((categories: any) => categories.map((x: any) => x.durations)),
+      map((durations: any) => {
+        let res = durations;
+        console.log('durations | res', res)
+        const toSelect = durations[0][0];
+        this.durationsForm.get('durations')?.setValue(toSelect);
+        return res
+      })
+    )
+
     this.durationsForm = this.fb.group({
       durations: [null, Validators.required],
     });
-    this.durations$ = getDurations().pipe(
-      tap(x => {
-        this.durationsValues = x;
-        const toSelect = this.durationsValues[0];
-        this.durationsForm.get('durations')?.setValue(toSelect)
-      }),
-      tap(res => console.log('res', res))
-      )
 
-    this.patientCategory = this.fb.group({
-      category: [null, Validators.required],
+    this._durationsForm = this.fb.group({
+      durations: [null, Validators.required],
     });
-    const toSelect0 = this.patientCategories.find((c) => c.id == 2);
-    this.patientCategory.get('category')?.setValue(toSelect0);
+    this._durations$ = getDurations().pipe(
+      tap((x) => {
+        this._durationsValues = x;
+        const toSelect = this._durationsValues[0];
+        this._durationsForm.get('durations')?.setValue(toSelect);
+      })
+      // tap(res => console.log('res', res))
+    );
   }
-
 }
 
 const getDurations = (): Observable<string[]> =>

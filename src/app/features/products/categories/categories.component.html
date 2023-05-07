@@ -17,14 +17,80 @@
 
       <div class="divider"></div>
 
-      <ng-container *ngIf="durationsValues.length">
-        <div class="select">
-          <!-- <div>durationsValues: {{ durationsValues }}</div> -->
+      <ng-container *ngIf="durations$ | async as durations">
+        <div class="help">
+          <b>TODO: durations:</b>
+          <pre>{{ durations[id] | json }}</pre>
+          <hr>
+          <div *ngFor="let duration of durations[id]">
+            <pre>{{ duration | json }}</pre>
+
+          </div>
           <form [formGroup]="durationsForm">
             <mat-form-field class="full-width">
               <mat-select placeholder="durations" formControlName="durations">
                 <mat-option
-                  *ngFor="let duration of durationsValues"
+                  *ngFor="let duration of durations[id]"
+                  [value]="duration"
+                >
+                  {{ duration }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>{{productsForm.get('categories')?.value}}</p>
+          </form>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="categories$ | async as categories">
+        <div class="help">
+          <b>TODO: categories:</b>
+          <pre>{{ categories[id] | json }}</pre>
+          <hr>
+          <form [formGroup]="productsForm">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="durations" formControlName="categories">
+                <mat-option
+                  *ngFor="let duration of categories"
+                  [value]="duration"
+                >
+                  {{ duration | json }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>{{productsForm.get('categories')?.value}}</p>
+          </form>
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngIf="_durations$ | async as durations">
+        <div class="help">
+          <pre>{{ durations | json }}</pre>
+          <hr>
+          <!-- <form [formGroup]="durationsForm">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="durations" formControlName="durations">
+                <mat-option
+                  *ngFor="let duration of durations"
+                  [value]="duration"
+                >
+                  {{ duration }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>{{durationsForm.get('durations')?.value}}</p>
+          </form> -->
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="_durationsValues.length">
+        <div class="select">
+          <!-- <div>durationsValues: {{ durationsValues }}</div> -->
+          <form [formGroup]="_durationsForm">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="durations" formControlName="durations">
+                <mat-option
+                  *ngFor="let duration of _durationsValues"
                   [value]="duration"
                 >
                   {{ duration }}
@@ -35,71 +101,6 @@
           </form>
         </div>
       </ng-container>
-
-      <div class="select0">
-        <div>{{ category.durations }}</div>
-        <!-- <ng-container *ngIf="animals.length > 0">
-          <select name="items" id="items" [formControl]="animalCtrl">
-            <option *ngFor="let item of animals">{{item}}</option>
-          </select>
-        </ng-container> -->
-
-        <ng-container *ngIf="durations$ | async as durations">
-          <!-- <pre>{{ durations | json }}</pre> -->
-          <select name="items" id="items" [formControl]="durationForm">
-            <option *ngFor="let duration of durations; index as id">
-              {{ durations[id] }}
-            </option>
-          </select>
-          <hr />
-
-          <pre>{{ category.durations | json }}</pre>
-          <mat-form-field>
-            <mat-label>Durations</mat-label>
-            <mat-select [formControl]="durationForm" required>
-              <mat-option
-                *ngFor="let duration of category.durations; index as id"
-                [value]="durations[0]"
-              >
-                {{ duration }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="durationForm.hasError('required')"
-              >Please choose duration</mat-error
-            >
-          </mat-form-field>
-        </ng-container>
-
-        <!-- <mat-form-field>
-          <mat-label>Durations</mat-label>
-          <mat-select [formControl]="durationForm" required>
-            <mat-option>--</mat-option>
-            <mat-option
-              *ngFor="let duration of category.durations"
-              [value]="duration"
-            >
-              {{ duration }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="durationForm.hasError('required')"
-            >Please choose duration</mat-error
-          >
-          <mat-hint>{{ animalControl.value?.sound }}</mat-hint>
-        </mat-form-field> -->
-      </div>
-      <!-- <mat-form-field>
-        <mat-label>Favorite animal</mat-label>
-        <mat-select [formControl]="animalControl" required>
-          <mat-option>--</mat-option>
-          <mat-option *ngFor="let animal of animals" [value]="animal">
-            {{ animal.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="animalControl.hasError('required')"
-          >Please choose an animal</mat-error
-        >
-        <mat-hint>{{ animalControl.value?.sound }}</mat-hint>
-      </mat-form-field> -->
     </div>
   </div>
   <!-- <mat-card *ngFor="let category of categories; index as id">

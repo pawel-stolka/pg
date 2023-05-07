@@ -1,31 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Product, Category, InsuranceType } from '@common/models';
 import { Observable, map, of, shareReplay, tap } from 'rxjs';
 
-export enum InsuranceType {
-  ONE_TIME = 'ONE_TIME',
-  TEN_TIMES = 'TEN_TIMES',
-  SUBSCIPTION = 'SUBSCIPTION',
-}
-export interface InsuranceDetail {
-  // id: number;
-  insuranceId: string;
-  type: InsuranceType;
-  price: number;
-  duration: string;
-}
 
-export interface Category {
-  id: number;
-  categoryName: string;
-  insuranceDetails: InsuranceDetail[];
-  durations?: string[];
-}
-
-export interface Product {
-  plu: string;
-  benefits: string[];
-  categories: Category[];
-}
 
 @Injectable({
   providedIn: 'root',
@@ -41,19 +18,17 @@ export class ProductService {
 
   getProducts$(): Observable<Product[]> {
     return of(mockProducts).pipe(
-      tap((products) => console.log('products', products)),
-      map((products) => {
-        let res = products.map((p) => ({
+      // tap((products) => console.log('products', products)),
+      map((products) =>
+        products.map((p) => ({
           ...p,
           categories: p.categories.map((c) => ({
             ...c,
             durations: c.insuranceDetails.map((det) => det.duration),
           })),
-        }));
-
-        console.log('res', res);
-        return res;
-      })
+        }))
+      ),
+      // tap((products) => console.log('products AFTER', products))
     );
   }
 }
