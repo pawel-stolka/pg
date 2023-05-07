@@ -17,39 +17,24 @@
 
       <div class="divider"></div>
 
-      <div class="select">
-        <!-- <div>durationsValues: {{ durationsValues }}</div> -->
-        <form [formGroup]="durationsForm">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="durations" formControlName="durations">
-              <mat-option
-                *ngFor="let duration of durationsValues"
-                [value]="duration"
-              >
-                {{ duration }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!-- <p>{{durationsForm.get('durations')?.value}}</p> -->
-        </form>
-      </div>
-
-      <div class="select0">
-        <form [formGroup]="patientCategory">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="_Category" formControlName="category">
-              <mat-option>--</mat-option>
-              <mat-option
-                *ngFor="let category of patientCategories"
-                [value]="category"
-              >
-                {{ category.name }} - {{ category.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <p>{{ patientCategory.get("category")?.value | json }}</p>
-        </form>
-      </div>
+      <ng-container *ngIf="durationsValues.length">
+        <div class="select">
+          <!-- <div>durationsValues: {{ durationsValues }}</div> -->
+          <form [formGroup]="durationsForm">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="durations" formControlName="durations">
+                <mat-option
+                  *ngFor="let duration of durationsValues"
+                  [value]="duration"
+                >
+                  {{ duration }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- <p>{{durationsForm.get('durations')?.value}}</p> -->
+          </form>
+        </div>
+      </ng-container>
 
       <div class="select0">
         <div>{{ category.durations }}</div>
