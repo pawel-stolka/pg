@@ -18,20 +18,19 @@
       <div class="divider"></div>
 
       <div class="select">
-        <div>durationsValues: {{ durationsValues }}</div>
+        <!-- <div>durationsValues: {{ durationsValues }}</div> -->
         <form [formGroup]="durationsForm">
           <mat-form-field class="full-width">
             <mat-select placeholder="durations" formControlName="durations">
-              <!-- <mat-option>--</mat-option> -->
               <mat-option
                 *ngFor="let duration of durationsValues"
                 [value]="duration"
               >
-                {{ duration  }}
+                {{ duration }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <!-- <p>{{durationsForm.get('durations')?.value | json}}</p> -->
+          <!-- <p>{{durationsForm.get('durations')?.value}}</p> -->
         </form>
       </div>
 
@@ -48,7 +47,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <p>{{patientCategory.get('category')?.value | json}}</p>
+          <p>{{ patientCategory.get("category")?.value | json }}</p>
         </form>
       </div>
 
