@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable, delay, of } from 'rxjs';
+import { Observable, delay, of, tap } from 'rxjs';
 import { Category } from 'src/app/services/product.service';
 
 @Component({
@@ -21,8 +21,10 @@ export class CategoriesComponent {
 
   durationForm: FormControl = new FormControl(); //'bla', Validators.required);
 
-  patientCategory: FormGroup; // = new FormGroup(null);
+  durationsForm: FormGroup;
+  durationsValues: string[] = []
 
+  patientCategory: FormGroup;
   patientCategories = [
     {
       id: 1,
@@ -42,16 +44,26 @@ export class CategoriesComponent {
   ];
 
   constructor(private fb: FormBuilder) {
-    this.durations$ = getDurations();
+    this.durationsForm = this.fb.group({
+      durations: [null, Validators.required],
+    });
+    this.durations$ = getDurations().pipe(
+      tap(x => {
+        this.durationsValues = x;
+        const toSelect = this.durationsValues[0];
+        this.durationsForm.get('durations')?.setValue(toSelect)
+
+      })
+    )
+
     this.patientCategory = this.fb.group({
       category: [null, Validators.required],
     });
-    const toSelect = this.patientCategories.find((c) => c.id == 2);
-    this.patientCategory.get('category')?.setValue(toSelect);
+    const toSelect0 = this.patientCategories.find((c) => c.id == 2);
+    this.patientCategory.get('category')?.setValue(toSelect0);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /*
   animalsSub: any = null;
