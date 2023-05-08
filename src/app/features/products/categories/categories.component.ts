@@ -30,9 +30,9 @@ export class CategoriesComponent {
     });
     this.categories$ = this.productService.products$.pipe(
       tap((products) => {
-        console.log('%c[this.categories]', Colors.INFO, this.categories);
-        console.log('%c[product]', Colors.BIG_GREY, this.product);
-        console.log('%c[RAW products]', Colors.BIG_GREY, products);
+        // console.log('%c[this.categories]', Colors.INFO, this.categories);
+        // console.log('%c[product]', Colors.BIG_GREY, this.product);
+        // console.log('%c[RAW products]', Colors.BIG_GREY, products);
       }),
       map((products) => {
         let categories = products.find(
@@ -49,20 +49,31 @@ export class CategoriesComponent {
         );
       })
     );
-    this.durations$ = this.categories$.pipe(
-      map((categories: any) => categories.map((x: any) => x.durations)),
-      map((durations: any) => {
-        let res = durations;
-        console.log('durations | res', res)
-        const toSelect = durations[0][0];
-        this.durationsForm.get('durations')?.setValue(toSelect);
-        return res
-      })
-    )
-
     this.durationsForm = this.fb.group({
       durations: [null, Validators.required],
     });
+
+    this.durations$ = this.categories$.pipe(
+      // map((categories: any) => categories.map((x: any, index: number) => ({
+      //   durations: x.durations,
+      //   index
+      // }))),
+      tap((v: any) => console.log('INDEX', v)),
+      map((x: any) => {
+        let length = x.length
+        console.log(`%c[durations | v | length: ${length}}`, Colors.BIGBIG_BLUE, x);
+        // let res = x.map((v: any) => ({
+        //   durations: v.durations,//.map(((x: any) => x.durations));
+        //   index: v.index
+        // }))
+        // let index = x.map(((x: any) => x.index));
+        // console.log(`%c[durations | res | index: ${index}]`, Colors.BIGBIG_BLUE, res);
+        // const toSelect = x.durations;
+        // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
+        // this.durationsForm.get('durations')?.setValue(toSelect);
+        return x;
+      })
+    );
 
     this._durationsForm = this.fb.group({
       durations: [null, Validators.required],

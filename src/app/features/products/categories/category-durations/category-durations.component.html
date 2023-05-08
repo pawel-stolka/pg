@@ -1,0 +1,20 @@
+<!-- <p>category-durations works!</p> -->
+
+<!-- <div class="help">
+  <div *ngFor="let duration of durations.durations">
+    <pre>{{ duration | json }}</pre>
+  </div>
+</div> -->
+<form [formGroup]="durationsForm">
+  <mat-form-field class="full-width">
+    <mat-select placeholder="durations" formControlName="durations">
+      <mat-option
+        *ngFor="let duration of durations.durations"
+        [value]="duration"
+      >
+        {{ duration }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- <p>{{ productsForm.get("categories")?.value }}</p> -->
+</form>
