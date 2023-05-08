@@ -8,7 +8,9 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductsComponent {
   products$ = this.productService.products$;
-  
+
+  productsState$ = this.productService.productsState$;
+
   constructor(private readonly productService: ProductService) {}
 
   getProducts$() {

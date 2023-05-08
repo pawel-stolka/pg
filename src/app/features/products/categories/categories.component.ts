@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Colors } from '@common/Colors';
 import { Category, Product } from '@common/models';
 import { Observable, delay, map, of, tap } from 'rxjs';
-import { ProductService } from 'src/app/services/product.service';
+import { PluCatDur, ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'categories',
@@ -19,6 +19,9 @@ export class CategoriesComponent {
   categories$: Observable<any>;
   durations$: Observable<string[]>;
   durationsForm: FormGroup;
+  currentDuration: any;
+
+  payments$: Observable<any[]>;
 
   _durations$: Observable<string[]>;
   _durationsForm: FormGroup;
@@ -41,13 +44,13 @@ export class CategoriesComponent {
 
         return categories;
       }),
-      tap((categories) => {
-        console.log(
-          '%c[CategoriesComponent] categories AFTER',
-          Colors.BIG_YELLOW,
-          categories
-        );
-      })
+      // tap((categories) => {
+      //   console.log(
+      //     '%c[CategoriesComponent] categories AFTER',
+      //     Colors.BIG_YELLOW,
+      //     categories
+      //   );
+      // })
     );
     this.durationsForm = this.fb.group({
       durations: [null, Validators.required],
@@ -58,22 +61,32 @@ export class CategoriesComponent {
       //   durations: x.durations,
       //   index
       // }))),
-      tap((v: any) => console.log('INDEX', v)),
-      map((x: any) => {
-        let length = x.length
-        console.log(`%c[durations | v | length: ${length}}`, Colors.BIGBIG_BLUE, x);
-        // let res = x.map((v: any) => ({
-        //   durations: v.durations,//.map(((x: any) => x.durations));
-        //   index: v.index
-        // }))
-        // let index = x.map(((x: any) => x.index));
-        // console.log(`%c[durations | res | index: ${index}]`, Colors.BIGBIG_BLUE, res);
-        // const toSelect = x.durations;
-        // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
-        // this.durationsForm.get('durations')?.setValue(toSelect);
-        return x;
-      })
+      // tap((v: any) => console.log('INDEX', v)),
+      // map((x: any) => {
+      //   let length = x.length
+      //   console.log(`%c[durations | v | length: ${length}}`, Colors.BIGBIG_BLUE, x);
+      //   // let res = x.map((v: any) => ({
+      //   //   durations: v.durations,//.map(((x: any) => x.durations));
+      //   //   index: v.index
+      //   // }))
+      //   // let index = x.map(((x: any) => x.index));
+      //   // console.log(`%c[durations | res | index: ${index}]`, Colors.BIGBIG_BLUE, res);
+      //   // const toSelect = x.durations;
+      //   // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
+      //   // this.durationsForm.get('durations')?.setValue(toSelect);
+      //   return x;
+      // })
     );
+
+    this.payments$ = this.categories$.pipe(
+      // map((categories: any) => categories.map((x: any, index: number) => ({
+      //   durations: x.durations,
+      //   index
+      // }))),
+      // tap((v: any) => console.log('1.payments', v)),
+      map((x: any) => x.map((v: any) => v.insuranceDetails)),
+      // tap((v: any) => console.log('2.payments', v)),
+    )
 
     this._durationsForm = this.fb.group({
       durations: [null, Validators.required],
@@ -86,6 +99,19 @@ export class CategoriesComponent {
       })
       // tap(res => console.log('res', res))
     );
+  }
+
+  setDuration(event: any) {
+    // console.log('%c[setDuration]', Colors.BIGBIG_BLUE, event);
+    this.currentDuration = event;
+    let pluCatDur: PluCatDur = {
+      plu: this.product.plu,
+      category: {
+        categoryName: event.category,
+        currentDuration: event.currentDuration
+      }
+    }
+    this.productService.setProductDuration(pluCatDur)
   }
 }
 

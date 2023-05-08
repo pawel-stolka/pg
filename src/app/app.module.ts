@@ -17,6 +17,7 @@ import { BenefitsComponent } from './features/products/benefits/benefits.compone
 import { CategoryDetailComponent } from './features/products/categories/category-detail/category-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryDurationsComponent } from './features/products/categories/category-durations/category-durations.component';
+import { CategoryPaymentsComponent } from './features/products/categories/category-payments/category-payments.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -37,6 +38,7 @@ export const routes: Routes = [
     BenefitsComponent,
     CategoryDetailComponent,
     CategoryDurationsComponent,
+    CategoryPaymentsComponent,
   ],
   imports: [
     BrowserModule,

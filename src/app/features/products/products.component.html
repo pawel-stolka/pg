@@ -1,4 +1,12 @@
 <h3>products</h3>
+<div>
+  <h2>productsState</h2>
+  <ng-container *ngIf="productsState$ | async as productsState">
+    <div class="help">
+      <pre>{{ productsState | json }}</pre>
+    </div>
+  </ng-container>
+</div>
 
 <div class="container">
   <ng-container *ngIf="products$ | async as products">
@@ -8,11 +16,12 @@
       <mat-card-title>{{ product.plu }}</mat-card-title>
       <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
       <mat-card-content>
-
         <benefits [benefits]="product.benefits"></benefits>
         <div class="divider"></div>
-        <categories [categories]="product.categories" [product]="product"></categories>
-
+        <categories
+          [categories]="product.categories"
+          [product]="product"
+        ></categories>
       </mat-card-content>
       <!-- <mat-card-actions>
         <button mat-button>LIKE</button>

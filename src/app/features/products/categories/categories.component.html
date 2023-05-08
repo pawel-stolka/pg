@@ -17,9 +17,25 @@
 
       <div class="divider"></div>
 
-      <ng-container *ngIf="durations$ | async as durations">
-        <category-durations [durations]="durations[id]"></category-durations>
+      <ng-container *ngIf="categories$ | async as categories">
+        <!-- <div>//TODO category-durations</div> -->
+        <category-durations [durations]="categories[id]" [category]="category" (currentDuration)="setDuration($event)"></category-durations>
+
+        <!-- <div class="help">
+          <b>//TODO: categories[{{ id }}]:</b>
+          <pre>{{ categories[id] | json }}</pre>
+        </div> -->
       </ng-container>
+
+      <ng-container *ngIf="payments$ | async as payments">
+        <div class="help">
+          <b>//TODO: payments[{{ id }}]:</b>
+          <pre>{{ payments[id] | json }}</pre>
+        </div>
+        <div class="divider"></div>
+        <category-payments [payments]="payments[id]" [currentDuration]="currentDuration"></category-payments>
+      </ng-container>
+
 
       <!-- <ng-container *ngIf="durations$ | async as durations">
         <div class="help">

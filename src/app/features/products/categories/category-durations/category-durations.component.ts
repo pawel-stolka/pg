@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Colors } from '@common/Colors';
 
@@ -8,7 +8,9 @@ import { Colors } from '@common/Colors';
   styleUrls: ['./category-durations.component.scss'],
 })
 export class CategoryDurationsComponent implements OnInit {
-  @Input() durations!: any;
+  @Input() durations: any;
+  @Input() category: any;
+  @Output() currentDuration = new EventEmitter();
 
   durationsForm: FormGroup;
 
@@ -16,12 +18,15 @@ export class CategoryDurationsComponent implements OnInit {
     this.durationsForm = this.fb.group({
       durations: [null, Validators.required],
     });
-
+    this.durationsForm.valueChanges.subscribe(change => {
+      // console.log('%c durationsForm change', Colors.BIG_MAG, change);
+      this.currentDuration.emit({currentDuration: change.durations, category: this.durations.categoryName})
+    })
 
   }
   ngOnInit(): void {
     const toSelect = this.durations.durations[0];
-    console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
+    // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
     this.durationsForm.get('durations')?.setValue(toSelect);
   }
 }

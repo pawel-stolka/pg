@@ -1,7 +1,9 @@
 export enum Colors {
-  INFO = 'border: 3px dotted dodgerblue; background-color: lightblue;',
+  INFO = 'border: 3px dotted; background-color: lightblue; padding: 5px',
+  INFO_2 = 'border: 3px dotted; background-color: yellow; padding: 5px',
+  INFO_FIN = 'border: 3px dotted; background-color: yellowgreen; padding: 5px',
   RED = 'border: 3px dotted red',
-  BIG_RED = 'border: 5px dotted red; padding: 5px',
+  BIG_RED = 'border: 5px dotted red; background-color: red; color: white',
   BIG_BLUE = 'border: 5px dotted dodgerblue; background-color: lightblue; padding: 5px',
   BIGBIG_BLUE = 'border: 5px dotted black; background-color: lightblue; padding: 10px',
   BIGBIG_GREEN = 'border: 5px dotted dodgerblue; background-color: yellowgreen; color: white; padding: 10px',
