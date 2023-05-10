@@ -7,9 +7,13 @@ export interface CatDur {
   categoryName: string;
   currentDuration: string;
 }
+// export interface PluCats {
+//   plu: string;
+//   categories: CatDur[] | undefined;
+// }
 export interface PluCats {
   plu: string;
-  categories: CatDur[];
+  categories: any[];
 }
 export interface PluCatDur {
   plu: string;
@@ -22,9 +26,11 @@ export interface PluCatDur {
 export class ProductService {
   products$: Observable<Product[]>;
 
-  private _productsStateSubj = new BehaviorSubject<PluCats[]>([]);
-  productsState$: Observable<PluCats[]> =
-    this._productsStateSubj.asObservable();
+  // private _productsStateSubj = new BehaviorSubject<PluCats[]>([]);
+  // productsState$: Observable<PluCats[]> =
+  //   this._productsStateSubj.asObservable();
+  private _productsStateSubj = new BehaviorSubject<any[]>([]);
+  productsState$: Observable<any[]> = this._productsStateSubj.asObservable();
 
   get productState() {
     return this._productsStateSubj.value;
@@ -60,209 +66,60 @@ export class ProductService {
   }
 
   changeState(change: PluCatDur) {
-    console.log('%[changeState - DROPDOWN]', change); //Colors.INFO, change);
+    console.log('%c[changeState]', Colors.BIG_YELLOW, change);
     // console.log('%c[currentState]', Colors.RED, this.productState);
 
     let pluInState = this.productState.find(({ plu }) => plu === change.plu);
+    console.log(`%c[2.pluInState] ${change.plu}`, Colors.GOLDEN_BLACK, pluInState);
     if (!pluInState) {
       this.addPluToState(change);
-      // this.addPluCat(change);
     } else {
       this.updatePluInState(change);
-      // this.updatePluCat(change);
     }
-  }
-  private hasStatePluGivenCategory(change: PluCatDur) {
-    let currentPluInState = this.productState.find(
-      ({ plu }) => plu === change.plu
-    );
-    let currentPluInStateCatNames = currentPluInState?.categories.map(
-      (c) => c.categoryName
-    );
-    return !!currentPluInStateCatNames?.includes(change.category.categoryName);
+    console.log('%c[3.productState]', Colors.BIG_MAG, this.productState);
   }
 
   addPluToState(change: PluCatDur) {
-    console.log('%c[1. addPluToState | change]', Colors.INFO, change);
-    let currentPluInState = this.productState.find(
-      ({ plu }) => plu === change.plu
-    );
-    let currentPluInStateCatNames = currentPluInState?.categories.map(
-      (c) => c.categoryName
-    );
-    let update: PluCats[] = [];
-    // let PLU_CAT_IN_STATE = this.hasStatePluGivenCategory(change);
-    // console.log('%c [2. PLU_CAT_IN_STATE ----]', Colors.GOLDEN_BLACK, PLU_CAT_IN_STATE);
-    update = [
+    let update: PluCats[] = [
       ...this.productState,
       {
         plu: change.plu,
-        categories: [
-          // ...currentPluInState?.categories ?? [],
-          // currCatNames,
-          change.category,
-        ],
+        categories: [change.category],
       },
     ];
-    console.log(
-      `%c [1.NO PLU_CAT_IN_STATE | ${change.category.categoryName}] =>`,
-      Colors.GOLDEN_BLACK,
-      update
-    );
     this._productsStateSubj.next(update);
-    /*
-    if(!PLU_CAT_IN_STATE) {
-    // if (!currentPluInStateCatNames?.includes(change.category.categoryName)) {
-      update = [
-        {
-          plu: change.plu,
-          categories: [
-            ...currentPluInState?.categories ?? [],
-            // currCatNames,
-            change.category,
-          ],
-        },
-      ];
-      console.log(
-        `%c [1.NO PLU_CAT_IN_STATE | ${change.category.categoryName}] =>`,
-        Colors.GOLDEN_BLACK,
-        // currentPluInStateCatNames,
-        update
-      );
-    } else {
-      console.log('%c [2. YES PLU_CAT_IN_STATE] =>', Colors.GOLDEN_BLACK, update);
-    }
-    this._productsStateSubj.next(update);
-    */
-    // console.log('%c[2. addPluToState | productState]', Colors.INFO_2, currentPluInState, currCatNames);
-    console.log(
-      '%c[3. addPluToState | productState]',
-      Colors.INFO_FIN,
-      this.productState
-    );
   }
 
   updatePluInState(change: PluCatDur) {
-    let currentPluInState = this.productState.find(
-      ({ plu }) => plu === change.plu
-    );
-    let currentPluInStateCatNames = currentPluInState?.categories.map(
-      (c) => c.categoryName
-    );
-    console.log(
-      '%c[1. updatePluInState | ch, pluCN]',
-      Colors.INFO,
-      change,
-      currentPluInState,
-      currentPluInStateCatNames
-    );
 
-    // console.log(
-    //   '%c[2. updatePluInState | productState]',
-    //   Colors.INFO_2,
-    //   this.productState
-    // );
+    let stateForPlu = this.productState.find(({ plu }) => plu === change.plu);
+    // console.log('%c1.[stateForPlu]', Colors.GOLDEN_BLACK, stateForPlu);
 
-    console.log(
-      '%c[3. updatePluInState | productState]',
-      Colors.INFO_FIN,
-      this.productState
-    );
-  }
-
-  updatePluCat(change: PluCatDur) {
-    let pluCats: PluCats = this.productState.filter(
-      ({ plu }) => plu === change.plu
-    )[0];
-
-    console.log(
-      '%c[updatePluCat | pluCats, change]',
-      Colors.BIG_BLUE,
-      pluCats,
-      change
-    );
-  }
-
-  _updatePluCat(change: PluCatDur) {
-    let hasPlu: PluCats = this.productState.filter(
-      ({ plu }) => plu === change.plu
-    )[0]; // ?? {} as PluCats
-    // console.log('%c[hasPlu]', Colors.BIG_RED, hasPlu, change);
-    let currentPluCats: CatDur[] = hasPlu?.categories;
-    // console.log('%c[currentCats]', Colors.RED, currentCats);
-    let currentCatNames = currentPluCats.map(
-      ({ categoryName }) => categoryName
-    );
-    // console.log(
-    //   '%c[currentCatNames]',
-    //   Colors.BIG_MAG,
-    //   currentCatNames,
-    //   change.category.categoryName
-    // );
-
-    if (currentCatNames.includes(change.category.categoryName)) {
-      console.log(
-        '%c[includes]',
-        Colors.BIGBIG_GREEN,
-        change.category.categoryName
+    let stateForPluCategories = stateForPlu.categories;
+    let stateForPlu_hasCategory = stateForPluCategories?.includes(
+      change.category
       );
-    } else {
+      // console.log('%c1.[stateForPlu_hasCategory]', Colors.GOLDEN_BLACK, stateForPlu_hasCategory);
+
+    if (stateForPlu_hasCategory) {
       console.log(
-        '%c[NO includes]',
+        '%c[HAS] CHECK DURATION',
         Colors.BIGBIG_RED,
-        change.category.categoryName
+        stateForPlu_hasCategory
       );
-      this.addPluCat(change);
-    }
-    // this.updatePluCat(change);
-  }
-
-  private addPluCat(change: PluCatDur) {
-    // console.log('%c[!hasPlu]', Colors.BIGBIG_GREEN, change);
-    let currentState = this.productState;
-    let currentPlu = currentState.find(({ plu }) => plu === change.plu); //?.categories//.map(({ categories }) => categories)//.map(({ categoryName }) => categoryName)
-    console.log(
-      '%c[addPluCat currentPluCats]',
-      Colors.INFO,
-      change,
-      currentPlu
-    );
-    let update: PluCats[] = [];
-    let currCatNames = currentPlu?.categories.map((c) => c.categoryName);
-    console.log(
-      '%c[addPluCat currentPluCats]',
-      Colors.BIGBIG_GREEN,
-      currCatNames
-    );
-    if (!currCatNames?.includes(change.category.categoryName)) {
-      console.log(
-        '%c [1.NO ----]',
-        Colors.GOLDEN_BLACK,
-        currCatNames,
-        change.category.categoryName
-      );
-      update = [
-        {
-          plu: change.plu,
-          categories: [
-            // currCatNames,
-            change.category,
-          ],
-        },
-      ];
+      this.changeDuration(change.plu, change.category);
     } else {
-      console.log('%c [2.----]', Colors.GOLDEN_BLACK, currentPlu?.categories);
+      let categoriesUpdate = [...stateForPluCategories, change.category];
+
+      let pluUpdate: PluCats = {
+        plu: change.plu,
+        categories: categoriesUpdate,
+      };
+      this._productsStateSubj.next([pluUpdate]);
     }
-    let newPluCats: PluCats = {
-      plu: change.plu,
-      categories: [change.category],
-    };
-    // let update: PluCats[] = [
-    //   ...currentState,
-    //   newPluCats
-    // ]
-    this._productsStateSubj.next(update);
-    console.log('%c[addPluCat update]', Colors.BIGBIG_GREEN, change, update);
+  }
+  changeDuration(plu: string, category: CatDur) {
+    throw new Error('Method not implemented.');
   }
 }
 
