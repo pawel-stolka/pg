@@ -1,1 +1,31 @@
-<p>home works!</p>
+<div>
+  <h2>productsState in home</h2>
+  <ng-container *ngIf="productsState$ | async as productsState">
+    <div class="help">
+      <pre>{{ productsState | json }}</pre>
+    </div>
+  </ng-container>
+</div>
+
+<div class="container">
+  <ng-container *ngIf="products$ | async as products">
+    <!-- <pre>{{ products | json }}</pre> -->
+
+    <mat-card *ngFor="let product of products">
+      <mat-card-title>{{ product.plu }}</mat-card-title>
+      <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+      <mat-card-content>
+        <benefits [benefits]="product.benefits"></benefits>
+        <div class="divider"></div>
+        <categories
+          [categories]="product.categories"
+          [product]="product"
+        ></categories>
+      </mat-card-content>
+      <!-- <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions> -->
+    </mat-card>
+  </ng-container>
+</div>

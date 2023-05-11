@@ -13,8 +13,12 @@ export interface CatDur {
 // }
 export interface PluCats {
   plu: string;
-  categories: any[];
+  categories: CatDur[];
 }
+// export interface PluCats {
+//   plu: string;
+//   categories: any[];
+// }
 export interface PluCatDur {
   plu: string;
   category: CatDur;
@@ -26,11 +30,11 @@ export interface PluCatDur {
 export class ProductService {
   products$: Observable<Product[]>;
 
-  // private _productsStateSubj = new BehaviorSubject<PluCats[]>([]);
-  // productsState$: Observable<PluCats[]> =
-  //   this._productsStateSubj.asObservable();
-  private _productsStateSubj = new BehaviorSubject<any[]>([]);
-  productsState$: Observable<any[]> = this._productsStateSubj.asObservable();
+  private _productsStateSubj = new BehaviorSubject<PluCats[]>([]);
+  productsState$: Observable<PluCats[]> =
+    this._productsStateSubj.asObservable();
+  // private _productsStateSubj = new BehaviorSubject<any[]>([]);
+  // productsState$: Observable<any[]> = this._productsStateSubj.asObservable();
 
   get productState() {
     return this._productsStateSubj.value;
@@ -43,7 +47,7 @@ export class ProductService {
   init() {}
 
   setProductDuration(pluCatDur: PluCatDur) {
-    // console.log('%c[this.setProductDuration]', Colors.BIG_BLUE, pluCatDur);
+    console.log('%c[this.setProductDuration]', Colors.BIG_BLUE, pluCatDur);
 
     this.changeState(pluCatDur);
     // console.log('%c[currentState]', Colors.RED, this.productState);
@@ -68,18 +72,20 @@ export class ProductService {
   changeState(change: PluCatDur) {
     console.log('%c[changeState]', Colors.BIG_YELLOW, change);
     // console.log('%c[currentState]', Colors.RED, this.productState);
+    // debugger;
+    let pluInState = !!this.productState.find(({ plu }) => plu === change.plu);
 
-    let pluInState = this.productState.find(({ plu }) => plu === change.plu);
-    console.log(`%c[2.pluInState] ${change.plu}`, Colors.GOLDEN_BLACK, pluInState);
     if (!pluInState) {
       this.addPluToState(change);
     } else {
       this.updatePluInState(change);
     }
-    console.log('%c[3.productState]', Colors.BIG_MAG, this.productState);
+    // console.log('%c[3.productState]', Colors.GOLDEN_BLACK, this.productState);
   }
 
   addPluToState(change: PluCatDur) {
+    // console.log('%c[1.addPluToState change]', Colors.INFO, change);
+    // console.log('%c[2.addPluToState productState]', Colors.INFO_2, this.productState);
     let update: PluCats[] = [
       ...this.productState,
       {
@@ -88,26 +94,20 @@ export class ProductService {
       },
     ];
     this._productsStateSubj.next(update);
+    // console.log('%c[3.addPluToState FIN]', Colors.INFO_FIN, this.productState);
   }
 
   updatePluInState(change: PluCatDur) {
-
     let stateForPlu = this.productState.find(({ plu }) => plu === change.plu);
-    // console.log('%c1.[stateForPlu]', Colors.GOLDEN_BLACK, stateForPlu);
 
-    let stateForPluCategories = stateForPlu.categories;
-    let stateForPlu_hasCategory = stateForPluCategories?.includes(
-      change.category
-      );
-      // console.log('%c1.[stateForPlu_hasCategory]', Colors.GOLDEN_BLACK, stateForPlu_hasCategory);
+    let stateForPluCategories = stateForPlu?.categories ?? [];
+    let pluCategoryNames = stateForPluCategories.map((x) => x.categoryName);
+    let stateForPlu_hasCategory = pluCategoryNames?.includes(
+      change.category.categoryName
+    );
 
     if (stateForPlu_hasCategory) {
-      console.log(
-        '%c[HAS] CHECK DURATION',
-        Colors.BIGBIG_RED,
-        stateForPlu_hasCategory
-      );
-      this.changeDuration(change.plu, change.category);
+      this.changeDuration(change);
     } else {
       let categoriesUpdate = [...stateForPluCategories, change.category];
 
@@ -118,8 +118,73 @@ export class ProductService {
       this._productsStateSubj.next([pluUpdate]);
     }
   }
-  changeDuration(plu: string, category: CatDur) {
-    throw new Error('Method not implemented.');
+
+  changeDuration(change: PluCatDur) {
+    console.log(
+      '%c[changeDuration]',
+      Colors.BIG_YELLOW,
+      change.plu,
+      change.category
+    );
+    // 1.take plu from this
+    let stateForPlu = this.productState.find(({ plu }) => plu === change.plu);
+    // 2.this to update
+    let stateForPluCategories = stateForPlu?.categories;
+    let TO_LEAVE_otherCategoriesForPlu: CatDur[] | undefined =
+      stateForPluCategories?.filter(
+        (c) => c.categoryName !== change.category.categoryName
+      ) ?? [];
+    // console.log('%c[categorySameNameAsChange]', Colors.BIGBIG_GREEN, TO_UPDATE_categorySameNameAsChange);
+    console.log(
+      '%c[otherCategoriesForPlu]',
+      Colors.BIG_ORANGE,
+      TO_LEAVE_otherCategoriesForPlu
+    );
+    // 2.this to update
+    let TO_UPDATE_categorySameNameAsChange = stateForPluCategories?.find(
+      (c) => c.categoryName === change.category.categoryName
+    );
+
+    let TO_UPDATE_plu;
+    if (TO_UPDATE_categorySameNameAsChange !== undefined) {
+      debugger;
+      TO_UPDATE_categorySameNameAsChange.currentDuration =
+        change.category.currentDuration;
+
+      // let TO_UPDATE_plu: PluCats = {
+      TO_UPDATE_plu = {
+        plu: change.plu,
+        categories: [
+          TO_UPDATE_categorySameNameAsChange,
+          ...TO_LEAVE_otherCategoriesForPlu,
+        ],
+      };
+    } else {
+      TO_UPDATE_plu = {
+        plu: change.plu,
+        categories: [
+          ...TO_LEAVE_otherCategoriesForPlu,
+        ],
+      };
+    }
+    // let UPDATE_pluCategories = categorySameNameAsChange;
+
+    let TO_LEAVE_stateForOtherPlus = this.productState.filter(
+      ({ plu }) => plu !== change.plu
+    );
+
+    console.log('%c[PS TO_UPDATE_plu]', Colors.GOLDEN_BLACK, TO_UPDATE_plu);
+    console.log('%c[PS TO_LEAVE_stateForOtherPlus]', Colors.GOLDEN_BLACK, TO_LEAVE_stateForOtherPlus);
+
+    let updateFIN = [
+      TO_UPDATE_plu,
+      TO_LEAVE_stateForOtherPlus
+    ]
+    console.log('updateFIN', updateFIN);
+
+    // let stateForOtherPlusCategories = stateForOtherPlus?.categories
+    // .find(({ plu }) => plu !== change.plu);
+    // console.log('%c[stateForPlu, stateForOtherPlus]', Colors.GOLDEN_BLACK, stateForPlu, stateForOtherPlus);
   }
 }
 
@@ -131,7 +196,7 @@ const mockBenefits: string[][] = [
 const _categories1: Category[] = [
   {
     id: 0,
-    categoryName: 'cat #1',
+    categoryName: 'cat-1',
     insuranceDetails: [
       {
         insuranceId: '#1.0',
@@ -149,7 +214,7 @@ const _categories1: Category[] = [
   },
   {
     id: 1,
-    categoryName: 'cat #2',
+    categoryName: 'cat-2',
     insuranceDetails: [
       {
         insuranceId: '#2.0',
@@ -169,7 +234,7 @@ const _categories1: Category[] = [
 const _categories2: Category[] = [
   {
     id: 0,
-    categoryName: 'cat #3',
+    categoryName: 'cat-3',
     insuranceDetails: [
       {
         insuranceId: '#1.0',
@@ -185,24 +250,6 @@ const _categories2: Category[] = [
       },
     ],
   },
-  // {
-  //   id: 1,
-  //   categoryName: 'cat #4',
-  //   insuranceDetails: [
-  //     {
-  //       insuranceId: '#2.0',
-  //       type: InsuranceType.TEN_TIMES,
-  //       price: 456,
-  //       duration: '5',
-  //     },
-  //     {
-  //       insuranceId: '#2.1',
-  //       type: InsuranceType.TEN_TIMES,
-  //       price: 789,
-  //       duration: '7',
-  //     },
-  //   ],
-  // },
 ];
 
 const _mockCategories: Category[][] = [_categories1, _categories2];
@@ -212,12 +259,17 @@ const mockCategories = (id: number) => {
 
 const mockProducts: Product[] = [
   {
-    plu: '1st-plu',
+    plu: 'plu-1',
     benefits: mockBenefits[0],
     categories: mockCategories(0),
   },
   {
-    plu: '2nd-plu',
+    plu: 'plu-2',
+    benefits: mockBenefits[1],
+    categories: mockCategories(1),
+  },
+  {
+    plu: 'plu-3',
     benefits: mockBenefits[1],
     categories: mockCategories(1),
   },

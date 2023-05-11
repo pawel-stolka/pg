@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'home',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  products$ = this.productService.products$;
 
+  productsState$ = this.productService.productsState$;
+
+  constructor(private readonly productService: ProductService) {}
 }
