@@ -1,12 +1,4 @@
-<h3>products</h3>
-<div>
-  <h2>productsState in products</h2>
-  <ng-container *ngIf="productsState$ | async as productsState">
-    <div class="help">
-      <pre>{{ productsState | json }}</pre>
-    </div>
-  </ng-container>
-</div>
+<h2>products</h2>
 
 <div class="container">
   <ng-container *ngIf="products$ | async as products">

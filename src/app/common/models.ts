@@ -23,3 +23,16 @@ export interface Product {
   benefits: string[];
   categories: Category[];
 }
+
+export interface CatDur {
+  categoryName: string;
+  currentDuration: string;
+}
+export interface PluCats {
+  plu: string;
+  categories: CatDur[];
+}
+export interface PluCatDur {
+  plu: string;
+  category: CatDur;
+}

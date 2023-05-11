@@ -1,0 +1,66 @@
+.container {
+  // border: 5px solid magenta;
+  margin: 5px;
+  padding: 5px;
+  // width: 100%;
+
+  .product {
+    border: 1px solid dodgerblue;
+    border-radius: 15px;
+    margin: 15px 0;
+
+    .header {
+      font-size: larger;
+      border: 1px so dodgerblue;
+      border-top-right-radius: 15px;
+      border-top-left-radius: 10px;
+      background-color: rgba(30, 143, 255, 0.623);
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      padding: 5px 0 5px;
+    }
+
+    .categories {
+      // border: 1px dotted dodgerblue;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row;
+      margin: 10px;
+      // flex-wrap: wrap;
+      // width: 100%;
+
+      .category {
+        // margin: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        border: 1px dotted dodgerblue;
+        min-width: 150px;
+
+        .name {
+          display: flex;
+          justify-content: center;
+          background-color: yellow;
+          width: 100%;
+        }
+
+        .duration {
+          // border: 1px dotted dodgerblue;
+          padding: 10px;
+
+          .dheader {
+
+          }
+          .amount {
+            display: flex;
+            justify-content: center;
+            background-color: yellowgreen;
+          }
+        }
+      }
+    }
+  }
+}

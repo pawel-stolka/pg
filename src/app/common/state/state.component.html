@@ -1,0 +1,21 @@
+<ng-container *ngIf="productsState$ | async as productsState">
+  <div>productsState:</div>
+  <!-- <pre>{{ productsState | json }}</pre> -->
+  <div class="container">
+    <div *ngFor="let product of productsState" class="product">
+      <div class="header">{{ product.plu }}</div>
+      <div class="categories">
+        <div *ngFor="let category of product.categories">
+          <div class="category">
+            <div class="name">{{ category.categoryName }}</div>
+            <div class="duration">
+              <div class="dheader">currentDuration</div>
+
+              <div class="amount">{{ category.currentDuration }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

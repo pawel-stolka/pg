@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Colors } from '@common/Colors';
-import { Category, Product } from '@common/models';
+import { Category, PluCatDur, Product } from '@common/models';
 import { Observable, delay, map, of, tap } from 'rxjs';
-import { PluCatDur, ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'categories',
