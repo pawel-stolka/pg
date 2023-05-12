@@ -12,6 +12,8 @@ export class CategoryDurationsComponent implements OnInit {
   @Input() category: any;
   @Output() currentDuration = new EventEmitter();
 
+  toSelect: any;
+
   durationsForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -26,6 +28,7 @@ export class CategoryDurationsComponent implements OnInit {
   }
   ngOnInit(): void {
     const toSelect = this.durations.durations[0];
+    this.toSelect = this.durations;
     // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
     this.durationsForm.get('durations')?.setValue(toSelect);
   }
