@@ -7,6 +7,8 @@
   </ng-container>
 </div> -->
 
+<button mat-raised-button (click)="openDialog()">Open dialog</button>
+
 <div class="container">
   <ng-container *ngIf="products$ | async as products">
     <!-- <pre>{{ products | json }}</pre> -->

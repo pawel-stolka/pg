@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryDurationsComponent } from './features/products/categories/category-durations/category-durations.component';
 import { CategoryPaymentsComponent } from './features/products/categories/category-payments/category-payments.component';
 import { StateComponent } from './common/state/state.component';
+import { Dialog2Component } from './features/home/dialog2/dialog2.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -41,6 +42,7 @@ export const routes: Routes = [
     CategoryDurationsComponent,
     CategoryPaymentsComponent,
     StateComponent,
+    Dialog2Component,
   ],
   imports: [
     BrowserModule,
