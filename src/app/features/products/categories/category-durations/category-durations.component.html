@@ -1,26 +1,48 @@
 <p>category-durations</p>
 
-<div class="help">
+<!-- <div class="help">
   <div>
     selection:
     <pre>{{ selection | json }}</pre>
   </div>
-</div>
-<!-- <div class="help">
-  <div *ngFor="let duration of durations.durations">
-    <pre>{{ duration | json }}</pre>
+  <div>
+    durations:
+    <pre>{{ durations | json }}</pre>
   </div>
 </div> -->
-<form [formGroup]="durationsForm">
-  <mat-form-field class="full-width">
-    <mat-select placeholder="durations" formControlName="durations">
-      <mat-option
-        *ngFor="let duration of durations.durations"
-        [value]="duration"
+<!-- <div class="hop">
+  <pre>plu: {{ plu | json }}</pre>
+</div> -->
+<!-- <div class="help">
+  <b>durations | pluState:</b>
+  <div>
+    category:
+    <pre>
+      {{ category | json }}
+  </pre></div>
+  <hr>
+</div> -->
+<div *ngIf="currentDurations$ | async as currentDurations">
+  <!-- <div>currentDurations:</div>
+  <pre>{{ currentDurations | json }}</pre> -->
+  <form [formGroup]="durationsForm">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="durations" formControlName="durations">
+        <!-- *ngFor="let duration of durations.durations" -->
+        <!-- <mat-option
+        *ngFor="let insurance of durations.insuranceDetails[0].insurances"
+        [value]="insurance.duration"
       >
-        {{ duration }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <!-- <p>{{ productsForm.get("categories")?.value }}</p> -->
-</form>
+        {{ insurance.duration }}
+      </mat-option> -->
+        <mat-option
+          *ngFor="let duration of currentDurations"
+          [value]="duration"
+        >
+          {{ duration }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <p>{{ productsForm.get("categories")?.value }}</p> -->
+  </form>
+</div>

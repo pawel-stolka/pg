@@ -5,13 +5,15 @@
       <category-detail
         *ngFor="let detail of category.insuranceDetails"
         [detail]="detail"
-       
+
       ></category-detail>
 
       <div class="divider"></div>
 
       <ng-container *ngIf="categories$ | async as categories">
+        <div>cats: <pre>{{ categories | json }}</pre></div>
         <category-durations
+          [plu]="plu"
           [durations]="categories[id]"
           [category]="category"
           (currentDuration)="setDuration($event)"
@@ -19,7 +21,7 @@
       </ng-container>
 
       <ng-container *ngIf="payments$ | async as payments">
-        <div class="help">
+        <!-- <div class="help">
           <b>//TODO: payments[{{ id }}]:</b>
           <pre>{{ payments[id] | json }}</pre>
         </div>
@@ -27,7 +29,7 @@
         <category-payments
           [payments]="payments[id]"
           [currentDuration]="currentDuration"
-        ></category-payments>
+        ></category-payments> -->
       </ng-container>
 
       <!-- <ng-container *ngIf="_durationsValues.length">

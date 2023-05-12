@@ -12,7 +12,8 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class CategoriesComponent {
   @Input() categories: Category[] = [];
-  @Input() product: Product = {} as Product;
+  // @Input() product: Product = {} as Product;
+  @Input() plu: string = 'cat-plu';
 
   productsForm: FormGroup;
   // products$: Observable<Product[]>;
@@ -37,7 +38,7 @@ export class CategoriesComponent {
     this.categories$ = this.productService.products$.pipe(
       map(
         (products) =>
-          products.find(({ plu }) => plu === this.product.plu)?.categories
+          products.find(({ plu }) => plu === this.plu)?.categories
       )
     );
 
@@ -61,10 +62,10 @@ export class CategoriesComponent {
   }
 
   setDuration(event: any) {
-    // console.log('%c[setDuration]', Colors.BIGBIG_BLUE, event);
+    console.log('%c[setDuration]', Colors.BIG_MAG, event);
     this.currentDuration = event;
     let pluCatDur: PluCatDur = {
-      plu: this.product.plu,
+      plu: this.plu,
       category: {
         categoryName: event.category,
         currentDuration: event.currentDuration,
