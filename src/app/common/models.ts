@@ -14,7 +14,7 @@ export interface InsuranceDetail {
 }
 
 export interface Category {
-  id: number;
+  id?: number;
   categoryName: string;
   insuranceDetails: InsuranceDetail[];
   durations?: string[];

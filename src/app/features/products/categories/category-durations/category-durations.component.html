@@ -1,15 +1,15 @@
-<p>category-durations</p>
 
-<!-- <div class="help">
-  <div>
+<div class="help">
+  <div class="h">category-durations</div>
+  <!-- <div>
     selection:
     <pre>{{ selection | json }}</pre>
+  </div> -->
+  <div class="h2">
+    <div class="h"> //durations:</div>
+    <!-- <pre>{{ durations | json }}</pre> -->
   </div>
-  <div>
-    durations:
-    <pre>{{ durations | json }}</pre>
-  </div>
-</div> -->
+</div>
 <!-- <div class="hop">
   <pre>plu: {{ plu | json }}</pre>
 </div> -->
@@ -21,10 +21,12 @@
       {{ category | json }}
   </pre></div>
   <hr>
-</div> -->
+</div>-->
 <div *ngIf="currentDurations$ | async as currentDurations">
-  <!-- <div>currentDurations:</div>
-  <pre>{{ currentDurations | json }}</pre> -->
+  <div class="h2">
+    <div class="h">//currentDurations:</div>
+    <pre>{{ currentDurations | json }}</pre>
+  </div>
   <form [formGroup]="durationsForm">
     <mat-form-field class="full-width">
       <mat-select placeholder="durations" formControlName="durations">
@@ -36,7 +38,7 @@
         {{ insurance.duration }}
       </mat-option> -->
         <mat-option
-          *ngFor="let duration of currentDurations"
+          *ngFor="let duration of currentDurations.durations"
           [value]="duration"
         >
           {{ duration }}

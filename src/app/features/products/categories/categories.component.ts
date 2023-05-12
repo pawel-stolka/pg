@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Colors } from '@common/Colors';
 import { Category, PluCatDur, Product } from '@common/models';
 import { Observable, delay, map, of, tap } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
+import { CategoryDialogComponent } from './category-dialog/category-dialog.component';
 
 @Component({
   selector: 'categories',
@@ -26,19 +28,26 @@ export class CategoriesComponent {
 
   payments$: Observable<any[]>;
 
-  // _durations$: Observable<string[]>;
-  // _durationsForm: FormGroup;
-  // _durationsValues: string[] = [];
+  openDialog() {
+    this.dialog.open(CategoryDialogComponent, {
+      data: {
+        plu: this.plu
+      },
+    });
+  }
 
-  constructor(private fb: FormBuilder, private productService: ProductService) {
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    public dialog: MatDialog
+  ) {
     this.productsForm = this.fb.group({
       products: [null, Validators.required],
     });
 
     this.categories$ = this.productService.products$.pipe(
       map(
-        (products) =>
-          products.find(({ plu }) => plu === this.plu)?.categories
+        (products) => products.find(({ plu }) => plu === this.plu)?.categories
       )
     );
 

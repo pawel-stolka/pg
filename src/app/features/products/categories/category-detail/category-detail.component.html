@@ -1,8 +1,14 @@
-<div>{{ detail | json }}</div>
-
+<!-- <div class="h2">
+  <div class="h">//cat-details:</div>
+  <div>
+    <pre>{{ detail | json }}</pre>
+  </div>
+</div> -->
 <div class="container">
-  <!-- <div>category-detail</div> -->
-  <div>type: {{ detail.type }}</div>
-  <!-- <div class="price">price: {{ detail.price | currency }}</div>
-  <div class="duration">duration: {{ detail.duration }}</div> -->
+  <div class="h2">
+    <div class="h">category-detail:</div>
+    <div>type: {{ detail.type }}</div>
+    <div class="price">price: {{ detail.price | currency }}</div>
+    <div class="duration">duration: {{ detail.duration }}</div>
+  </div>
 </div>

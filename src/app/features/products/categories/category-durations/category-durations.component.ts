@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Colors } from '@common/Colors';
-import { map } from 'rxjs';
+import { PluCatDur } from '@common/models';
+import { map, tap } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -13,13 +14,21 @@ export class CategoryDurationsComponent implements OnInit {
   @Input() plu: string = 'init-plu';
   @Input() durations: any;
   @Input() category: any;
-  @Output() currentDuration = new EventEmitter();
+  // @Output() currentDuration = new EventEmitter();
 
   currentDurations$ = this.productService.productsState$.pipe(
-    map(pluCats => pluCats.find(pc => pc.plu === this.plu )?.categories),
-    map(cats => cats?.map(cat => cat.currentDuration))
-    // map(cats => cats?.find(cat => cat.categoryName === this.category.categoryName))
-  )
+    map((pluCats) => pluCats.find((pc) => pc.plu === this.plu)?.categories),
+    // tap(cd => console.log(`%c[currentDurations$ 2 ${this.plu}]`, Colors.BIG_ORANGE, cd)),
+    map((cats) => ({
+      durations: cats?.map(({currentDuration}) => currentDuration),
+      currentCategory: cats?.find(
+        ({categoryName}) => categoryName === this.category.categoryName
+      ),
+    }))
+    // map(cats => cats?.find(cat => cat.categoryName === this.category.categoryName)),
+    // map(cats => cats?.map(cat => cat.currentDuration))
+    // map(cats => cats?.map(cat => cat.currentDuration))
+  );
 
   durationsForm: FormGroup;
 
@@ -28,20 +37,30 @@ export class CategoryDurationsComponent implements OnInit {
       durations: [null, Validators.required],
     });
     this.durationsForm.valueChanges.subscribe((change) => {
-      // console.log('%c durationsForm change', Colors.BIG_MAG, change);
-      this.currentDuration.emit({
-        currentDuration: change.durations,
-        category: this.durations.categoryName,
-      });
+      console.log('%c durationsForm change -> productService.setProductDuration', Colors.BIG_MAG);
+      let pluCatDur: PluCatDur = {
+        plu: this.plu,
+        category: {
+          categoryName: this.category.categoryName,
+          currentDuration: change.durations
+        }
+      }
+      this.productService.setProductDuration(pluCatDur)
+      // this.currentDuration.emit({
+      //   currentDuration: change.durations,
+      //   category: this.durations.categoryName,
+      // });
     });
   }
   ngOnInit(): void {
-    console.log('%c[durations | CHECK]', Colors.BIG_YELLOW, this.durations);
+    // console.log('%c[durations | CHECK]', Colors.BIG_YELLOW, this.durations);
     // const toSelect = this.durations.durations[0];
     // const toSelect = this.durations.insuranceDetails[0].insurances[0].duration
-    const toSelect = this.durations.insuranceDetails[0].insurances.map((i: any) => i.duration)[0]
+    const toSelect = this.durations.insuranceDetails[0].insurances.map(
+      (i: any) => i.duration
+    )[0];
     // this.selection = this.durations.insuranceDetails[0].insurances.map((i: any) => i.duration)//[0].duration
-    // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
+    console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
     this.durationsForm.get('durations')?.setValue(toSelect);
   }
 }

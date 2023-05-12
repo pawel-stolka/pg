@@ -1,7 +1,7 @@
 <ng-container *ngIf="productsState$ | async as productsState">
   <div>productsState:</div>
-  <!-- <pre>{{ productsState | json }}</pre> -->
-  <div class="container">
+  <pre>{{ productsState | json }}</pre>
+  <!-- <div class="container">
     <div *ngFor="let product of productsState" class="product">
       <div class="header">{{ product.plu }}</div>
       <div class="categories">
@@ -17,5 +17,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </ng-container>

@@ -11,6 +11,8 @@ import {
 } from '@common/models';
 import { BehaviorSubject, Observable, map, of, shareReplay, tap } from 'rxjs';
 
+const products: Product[] = mockProducts;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,16 +33,17 @@ export class ProductService {
 
   setProductDuration(pluCatDur: PluCatDur) {
     console.log('%c[this.setProductDuration]', Colors.BIG_BLUE, pluCatDur);
-
+    // debugger;
     this.changeState(pluCatDur);
-    // console.log('%c[currentState]', Colors.RED, this.productState);
+    // this.changeState(pluCatDur);
   }
 
   getProducts$(): Observable<Product[]> {
-    // getProducts$(): Observable<any[]> {
     let DEFAULT_TYPE_ID = 0;
-    return of(mockProducts).pipe(
-      tap((products) => console.log('products', products)),
+    return of(products).pipe(
+      // tap((products) =>
+      //   console.log('%c[products]', Colors.GOLDEN_BLACK, products)
+      // ),
       map((products) =>
         products.map((p) => ({
           ...p,
@@ -54,15 +57,49 @@ export class ProductService {
           })),
         }))
       ),
-      shareReplay()
-      // tap((products) => console.log('products AFTER', products))
+      shareReplay(),
+      // tap((products) =>
+      //   console.log('%c[products AFTER]', Colors.GOLDEN_BLACK, products)
+      // ),
+      tap((products) => {
+        let pluCats: PluCats[] = products.map(({ plu, categories }) => {
+          let catDurs: CatDur[] | any[] = categories.map(
+            ({ categoryName, insuranceDetails }) => ({
+              categoryName,
+              currentDuration: insuranceDetails.map(
+                (det) => det.insurances.map((ins) => ins.duration)[0]
+              ),
+            })
+          );
+          return {
+            plu,
+            categories: catDurs,
+          };
+        });
+        this.setInitialDurations(pluCats);
+      })
     );
   }
 
+  setInitialDurations(pluCats: PluCats[]) {
+    pluCats.forEach((pluCat, i) => {
+      pluCat.categories.forEach((category, j) => {
+        let pluCatDur: PluCatDur = {
+          plu: pluCat.plu,
+          category: category,
+        };
+        this.changeState(pluCatDur);
+        // let pluState = this.productState.find(
+        //   (pluCats) => pluCats.plu === pluCat.plu
+        // )?.categories;
+        // console.log(`AFTER CHANGE | ${pluCat.plu}`, pluState);
+      });
+    });
+  }
+
   changeState(change: PluCatDur) {
-    console.log('%c[changeState]', Colors.BIG_YELLOW, change);
+    // console.log('%c[changeState]', Colors.BIG_YELLOW, change);
     // console.log('%c[currentState]', Colors.RED, this.productState);
-    // debugger;
     let pluInState = !!this.productState.find(({ plu }) => plu === change.plu);
 
     if (!pluInState) {
@@ -73,21 +110,21 @@ export class ProductService {
     // console.log('%c[3.productState]', Colors.GOLDEN_BLACK, this.productState);
   }
 
-  addPluToState(change: PluCatDur) {
-    // console.log('%c[1.addPluToState change]', Colors.INFO, change);
-    // console.log('%c[2.addPluToState productState]', Colors.INFO_2, this.productState);
-    let update: PluCats[] = [
-      ...this.productState,
-      {
-        plu: change.plu,
-        categories: [change.category],
-      },
-    ];
+  private addPluToState(change: PluCatDur) {
+    let otherPlus = this.productState.filter(
+      (state) => state.plu !== change.plu
+    );
+
+    let currentChange: PluCats = {
+      plu: change.plu,
+      categories: [change.category],
+    };
+    let update: PluCats[] = [...otherPlus, currentChange];
     this._productsStateSubj.next(update);
     // console.log('%c[3.addPluToState FIN]', Colors.INFO_FIN, this.productState);
   }
 
-  updatePluInState(change: PluCatDur) {
+  private updatePluInState(change: PluCatDur) {
     let stateForPlu = this.productState.find(({ plu }) => plu === change.plu);
 
     let stateForPluCategories = stateForPlu?.categories ?? [];
@@ -103,47 +140,62 @@ export class ProductService {
         plu: change.plu,
         categories: [...stateForPluCategories, change.category],
       };
-      this._productsStateSubj.next([pluUpdate]);
+      let otherPlus = this.productState.filter(
+        (state) => state.plu !== change.plu
+      );
+      let correctUpdate: PluCats[] = [...otherPlus, pluUpdate];
+      this._productsStateSubj.next(correctUpdate);
     }
+
+    // console.log(
+    //   '%c[STATE 3.updatePluInState]',
+    //   Colors.INFO_FIN,
+    //   this.productState
+    // );
   }
 
-  changeDuration(change: PluCatDur) {
+  private changeDuration(change: PluCatDur) {
+    // debugger;
     let stateForPlu = this.productState.find(({ plu }) => plu === change.plu);
     let stateForPluCategories = stateForPlu?.categories;
-    let TO_LEAVE_otherCategoriesForPlu: CatDur[] | undefined =
-      stateForPluCategories?.filter(
-        (c) => c.categoryName !== change.category.categoryName
-      ) ?? [];
 
-    let TO_UPDATE_categorySameNameAsChange = stateForPluCategories?.find(
-      (c) => c.categoryName === change.category.categoryName
-    );
+    // this.productState = []
 
-    let TO_UPDATE_plu;
-    if (TO_UPDATE_categorySameNameAsChange !== undefined) {
-      TO_UPDATE_categorySameNameAsChange.currentDuration =
-        change.category.currentDuration;
 
-      TO_UPDATE_plu = {
-        plu: change.plu,
-        categories: [
-          TO_UPDATE_categorySameNameAsChange,
-          ...TO_LEAVE_otherCategoriesForPlu,
-        ],
-      };
-    } else {
-      TO_UPDATE_plu = {
-        plu: change.plu,
-        categories: [...TO_LEAVE_otherCategoriesForPlu],
-      };
-    }
+    // let TO_LEAVE_otherCategoriesForPlu: CatDur[] | undefined =
+    //   stateForPluCategories?.filter(
+    //     (c) => c.categoryName !== change.category.categoryName
+    //   ) ?? [];
 
-    let TO_LEAVE_stateForOtherPlus = this.productState.filter(
-      ({ plu }) => plu !== change.plu
-    );
+    // let TO_UPDATE_categorySameNameAsChange = stateForPluCategories?.find(
+    //   (c) => c.categoryName === change.category.categoryName
+    // );
 
-    let updateFIN = [TO_UPDATE_plu, ...TO_LEAVE_stateForOtherPlus];
-    console.log('updateFIN', updateFIN);
-    this._productsStateSubj.next(updateFIN);
+    // let TO_UPDATE_plu;
+    // if (TO_UPDATE_categorySameNameAsChange !== undefined) {
+    //   TO_UPDATE_categorySameNameAsChange.currentDuration =
+    //     change.category.currentDuration;
+
+    //   TO_UPDATE_plu = {
+    //     plu: change.plu,
+    //     categories: [
+    //       TO_UPDATE_categorySameNameAsChange,
+    //       ...TO_LEAVE_otherCategoriesForPlu,
+    //     ],
+    //   };
+    // } else {
+    //   TO_UPDATE_plu = {
+    //     plu: change.plu,
+    //     categories: [...TO_LEAVE_otherCategoriesForPlu],
+    //   };
+    // }
+
+    // let TO_LEAVE_stateForOtherPlus = this.productState.filter(
+    //   ({ plu }) => plu !== change.plu
+    // );
+
+    // let updateFIN = [...TO_LEAVE_stateForOtherPlus, TO_UPDATE_plu];
+    // // console.log('updateFIN', updateFIN);
+    // this._productsStateSubj.next(updateFIN);
   }
 }

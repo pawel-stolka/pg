@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatRadioModule,
     MatSelectModule,
     MatDialogModule,
+    MatButtonModule,
   ],
 })
 export class MaterialModule {}

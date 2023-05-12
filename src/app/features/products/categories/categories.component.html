@@ -11,7 +11,8 @@
       <div class="divider"></div>
 
       <ng-container *ngIf="categories$ | async as categories">
-        <div>cats: <pre>{{ categories | json }}</pre></div>
+        <button mat-raised-button (click)="openDialog()">category dialog</button>
+        <!-- <div>cats: <pre>{{ categories | json }}</pre></div> -->
         <category-durations
           [plu]="plu"
           [durations]="categories[id]"

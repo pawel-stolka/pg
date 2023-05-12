@@ -6,7 +6,6 @@
 
     <mat-card *ngFor="let product of products">
       <mat-card-title>{{ product.plu }}</mat-card-title>
-      <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
       <mat-card-content>
         <benefits [benefits]="product.benefits"></benefits>
         <div class="divider"></div>
@@ -15,10 +14,6 @@
           [plu]="product.plu"
         ></categories>
       </mat-card-content>
-      <!-- <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
     </mat-card>
   </ng-container>
 </div>

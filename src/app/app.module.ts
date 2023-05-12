@@ -20,6 +20,7 @@ import { CategoryDurationsComponent } from './features/products/categories/categ
 import { CategoryPaymentsComponent } from './features/products/categories/category-payments/category-payments.component';
 import { StateComponent } from './common/state/state.component';
 import { Dialog2Component } from './features/home/dialog2/dialog2.component';
+import { CategoryDialogComponent } from './features/products/categories/category-dialog/category-dialog.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -43,6 +44,7 @@ export const routes: Routes = [
     CategoryPaymentsComponent,
     StateComponent,
     Dialog2Component,
+    CategoryDialogComponent,
   ],
   imports: [
     BrowserModule,
