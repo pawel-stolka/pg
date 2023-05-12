@@ -20,8 +20,6 @@ export class ProductService {
   private _productsStateSubj = new BehaviorSubject<PluCats[]>([]);
   productsState$: Observable<PluCats[]> =
     this._productsStateSubj.asObservable();
-  // private _productsStateSubj = new BehaviorSubject<any[]>([]);
-  // productsState$: Observable<any[]> = this._productsStateSubj.asObservable();
 
   get productState() {
     return this._productsStateSubj.value;
@@ -31,8 +29,6 @@ export class ProductService {
     this.products$ = this.getProducts$();
   }
 
-  init() {}
-
   setProductDuration(pluCatDur: PluCatDur) {
     console.log('%c[this.setProductDuration]', Colors.BIG_BLUE, pluCatDur);
 
@@ -41,17 +37,24 @@ export class ProductService {
   }
 
   getProducts$(): Observable<Product[]> {
+    // getProducts$(): Observable<any[]> {
+    let DEFAULT_TYPE_ID = 0;
     return of(mockProducts).pipe(
-      // tap((products) => console.log('products', products)),
+      tap((products) => console.log('products', products)),
       map((products) =>
         products.map((p) => ({
           ...p,
           categories: p.categories.map((c) => ({
             ...c,
-            durations: c.insuranceDetails.map(({ duration }) => duration),
+            insuranceDetails: c.insuranceDetails.map((det) => ({
+              type: det.insurances.map((_) => det.type)[DEFAULT_TYPE_ID],
+              insurances: det.insurances,
+            })),
+            // durations: c.insuranceDetails.map(({ duration }) => duration),
           })),
         }))
-      )
+      ),
+      shareReplay()
       // tap((products) => console.log('products AFTER', products))
     );
   }

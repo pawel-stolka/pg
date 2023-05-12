@@ -5,8 +5,7 @@
       <category-detail
         *ngFor="let detail of category.insuranceDetails"
         [detail]="detail"
-        [price]="detail.price"
-        [duration]="detail.duration"
+       
       ></category-detail>
 
       <div class="divider"></div>
@@ -31,7 +30,7 @@
         ></category-payments>
       </ng-container>
 
-      <ng-container *ngIf="_durationsValues.length">
+      <!-- <ng-container *ngIf="_durationsValues.length">
         <div class="select">
           <form [formGroup]="_durationsForm">
             <mat-form-field class="full-width">
@@ -46,7 +45,7 @@
             </mat-form-field>
           </form>
         </div>
-      </ng-container>
+      </ng-container> -->
     </div>
   </div>
 </div>

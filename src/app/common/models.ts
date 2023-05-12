@@ -3,12 +3,14 @@ export enum InsuranceType {
   TEN_TIMES = 'TEN_TIMES',
   SUBSCIPTION = 'SUBSCIPTION',
 }
-export interface InsuranceDetail {
-  // id: number;
+export interface Insurance {
   insuranceId: string;
-  type: InsuranceType;
   price: number;
   duration: string;
+}
+export interface InsuranceDetail {
+  type: InsuranceType;
+  insurances: Insurance[];
 }
 
 export interface Category {

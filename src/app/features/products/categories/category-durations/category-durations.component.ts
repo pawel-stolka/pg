@@ -12,21 +12,28 @@ export class CategoryDurationsComponent implements OnInit {
   @Input() category: any;
   @Output() currentDuration = new EventEmitter();
 
+  selection: any;
+
   durationsForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.durationsForm = this.fb.group({
-      durations: [null, Validators.required],
+      durations: ['init', Validators.required],
     });
-    this.durationsForm.valueChanges.subscribe(change => {
+    this.durationsForm.valueChanges.subscribe((change) => {
       // console.log('%c durationsForm change', Colors.BIG_MAG, change);
-      this.currentDuration.emit({currentDuration: change.durations, category: this.durations.categoryName})
-    })
-
+      this.currentDuration.emit({
+        currentDuration: change.durations,
+        category: this.durations.categoryName,
+      });
+    });
   }
   ngOnInit(): void {
-    const toSelect = this.durations.durations[0];
-    // console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
+    console.log('%c[durations | CHECK]', Colors.BIG_YELLOW, this.durations);
+    // const toSelect = this.durations.durations[0];
+    const toSelect = this.durations.insuranceDetails[0].insurances[0].duration
+    this.selection = this.durations.insuranceDetails[0].insurances[0].duration
+    console.log('%c[durations | toSelect]', Colors.BIGBIG_BLUE, toSelect);
     this.durationsForm.get('durations')?.setValue(toSelect);
   }
 }
